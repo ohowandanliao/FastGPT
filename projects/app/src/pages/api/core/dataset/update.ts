@@ -71,6 +71,7 @@ async function handler(req: ApiRequestProps<UpdateDatasetBody>) {
       externalReadUrl,
       apiDatasetServer,
       autoSync,
+      pdfParseConfig,
       chunkSettings: rawChunkSettings
     }
   } = parseApiInput({
@@ -243,6 +244,8 @@ async function handler(req: ApiRequestProps<UpdateDatasetBody>) {
         ...(externalReadUrl !== undefined && { externalReadUrl }),
         ...(isMove && { inheritPermission: true }),
         ...(typeof autoSync === 'boolean' && { autoSync }),
+        // 传空对象等价于恢复全部开关默认值(读取层补全),旧文件已固化的解析结果不受影响
+        ...(pdfParseConfig !== undefined && { pdfParseConfig }),
         ...apiDatasetParams,
         ...(!isMove && { updateTime: new Date() })
       },

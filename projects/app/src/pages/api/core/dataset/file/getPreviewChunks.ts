@@ -1,5 +1,9 @@
 import { DatasetSourceReadTypeEnum } from '@fastgpt/global/core/dataset/constants';
-import { rawText2Chunks, readDatasetSourceRawText } from '@fastgpt/service/core/dataset/read';
+import {
+  getDatasetPdfParseConfig,
+  rawText2Chunks,
+  readDatasetSourceRawText
+} from '@fastgpt/service/core/dataset/read';
 import { NextAPI } from '@/service/middleware/entry';
 import type { ApiRequestProps } from '@fastgpt/next/type';
 import { WritePermissionVal } from '@fastgpt/global/support/permission/constant';
@@ -88,6 +92,7 @@ async function handler(
     selector,
     externalFileId,
     customPdfParse,
+    pdfParseConfig: getDatasetPdfParseConfig(dataset),
     apiDatasetServer: dataset.apiDatasetServer,
     datasetId
   });

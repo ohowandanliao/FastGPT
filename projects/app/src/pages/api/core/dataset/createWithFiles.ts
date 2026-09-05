@@ -48,7 +48,8 @@ async function handler(req: ApiRequestProps): Promise<CreateDatasetWithFilesResp
     req,
     bodySchema: CreateDatasetWithFilesBodySchema
   }).body;
-  const { parentId, name, avatar, vectorModelId, agentModelId, vlmModelId } = datasetParams;
+  const { parentId, name, avatar, vectorModelId, agentModelId, vlmModelId, pdfParseConfig } =
+    datasetParams;
 
   const vectorModelData =
     getOptionalEmbeddingModelData({ modelId: vectorModelId }) ?? getDefaultEmbeddingModelData();
@@ -89,7 +90,8 @@ async function handler(req: ApiRequestProps): Promise<CreateDatasetWithFilesResp
             ...(vlmModelData?.modelId && { vlmModelId: vlmModelData.modelId }),
             avatar,
             intro: '',
-            type: DatasetTypeEnum.dataset
+            type: DatasetTypeEnum.dataset,
+            ...(pdfParseConfig && { pdfParseConfig })
           }
         ],
         { session, ordered: true }

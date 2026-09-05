@@ -17,7 +17,11 @@ import { addMinutes } from 'date-fns';
 import { checkTeamAiPointsAndLock } from './utils';
 import { getErrText } from '@fastgpt/global/common/error/utils';
 import { delay } from '@fastgpt/global/common/system/utils';
-import { rawText2Chunks, readDatasetSourceRawText } from '@fastgpt/service/core/dataset/read';
+import {
+  getDatasetPdfParseConfig,
+  rawText2Chunks,
+  readDatasetSourceRawText
+} from '@fastgpt/service/core/dataset/read';
 import {
   getDatasetAgentModel,
   getDatasetEmbeddingModel,
@@ -313,6 +317,7 @@ export const datasetParseQueue = async (): Promise<any> => {
           teamId: data.teamId,
           tmbId: data.tmbId,
           customPdfParse: collection.customPdfParse,
+          pdfParseConfig: getDatasetPdfParseConfig(dataset),
           usageId: data.billId,
           datasetId: data.datasetId,
           ...sourceReadType
